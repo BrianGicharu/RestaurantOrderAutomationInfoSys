@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #061322;
+            color: white;
+        }
+
+        .card-dark {
+            background-color: #061322;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: #111827;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            padding-right: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            text-align: left;
+        }
+
+        .sidebar li.active {
+            background-color: #FF3E49;
+            border-radius: 10px;
+        }
+
+        .sidebar li:hover {
+            background-color: #ff3e486e;
+            font-size: large;
+            border-radius: 10px;
+        }
+
+        .main-content {
+            margin-left: 180px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #111827;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.075);
+        }
+
+        .card-bg {
+            background-color: #111827 !important;
+        }
+
+        .card-header {
+            background-color: transparent;
+        }
+
+        .navbar {
+            background-color: #111827;
+        }
+
+        .chart-container {
+            height: 450px;
+        }
+
+        @media (max-width: 575.98px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .chart-container {
+                height: 600px;
+            }
+        }
+
+        .text-radioactive {
+            color: chartreuse;
+        }
+
+        .bg-radioactive-fade,
+        .bg-fade-radioactive {
+            background-color: rgba(128, 255, 0, 0.092);
+        }
+
+        .custom-border-fade {
+            border: 1px solid rgba(255, 255, 255, 0.163);
+        }
+
+        .bg-card {
+            background-color: #0613221f;
+        }
+
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 20px;
+            color: #FF3B43;
+        }
+
+        .btn-custom {
+            background-color: #FF3B43;
+            border: none;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #FF7078;
+        }
+
+        .response-date {
+            color: #A5A5A5;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px 0 0;
+        }
+
+        .dropdown-menu {
+            background-color: #232427;
+            border: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: #FF3B43;
+            color: white;
+        }
+
+        .navbar-icon {
+            font-size: 20px;
+        }
+
+        .ratings-card {
+            background-color: #1E293B;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .ratings-card h5 {
+            color: #fff;
+        }
+
+        .ratings-bar {
+            background-color: #6B7280;
+            border-radius: 5px;
+            height: 8px;
+            margin: 10px 0;
+        }
+
+        .ratings-bar-fill {
+            height: 8px;
+            border-radius: 5px;
+        }
+
+        .text-yellow {
+            color: #FBBF24;
+        }
+
+        .feedback-card {
+            background-color: #1E293B;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        .pagination a:hover {
+            background-color: #4B5563;
+        }
+
+        .icon-rounded,
+        .rounded-icon {
+            border: 2px solid rgba(255, 255, 255, 0.16);
+            border-radius: 5px;
+        }
+
+        .simple-icon-rounded {
+            border-radius: 5px;
+        }
+
+        .border-white-fade {
+            border: 2px solid rgba(255, 255, 255, 0.0625);
+        }
+
+        .text-fade-white,
+        .link-fade-white {
+            color: rgba(245, 245, 245, 0.5);
+        }
+
+        .link-fade-white:hover {
+            color: chartreuse;
+        }
+
+        .custom-bg-transparent {
+            background-color: transparent;
+        }
+
+        .btn-purple-fade {
+            background-color: rgba(128, 10, 128, 0.25);
+        }
+
+        .btn-purple-fade:hover {
+            background-color: rgba(128, 10, 128, 0.5);
+        }
+
+        .text-purple {
+            color: rgb(212, 21, 220);
+        }
+
+        .btn-radioactive-fade {
+            background-color: rgba(128, 255, 0, 0.25);
+        }
+
+        .btn-radioactive-fade:hover {
+            background-color: rgba(128, 255, 0, 0.5);
+        }
+
+        .custom-bottom-border {
+            border-bottom: 1px #000 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2c2c2c;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #555 #2c2c2c;
+        }
+        .top-right-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: wheat;
+            border-radius: 7px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid d-flex">
+        <!-- Sidebar -->
+        <div class="d-flex">
+            <nav class="sidebar d-flex flex-column position-fixed prl-7">
+
+                <div class="d-flex container-fluid px-3 mb-4 justify-content-center">
+                    <h2 class="text-danger">ABRAHAO</h2>
+                </div>
+
+                <ul>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/analytics.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-chart-line me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active list-unstyled px-0 py-1 mb-1">
+                        <a href="/reports.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-file-alt me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/menu.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-utensils me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Menu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/orders.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-concierge-bell me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Orders</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/tablets.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-tablet-alt me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Tablets</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/feedback.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-comment-dots me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Feedback</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/settings.html" class="d-flex align-items-center fs-5">
+                            <i class="fa-solid fa-cog me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/support.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-headset me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Support</span>
+                        </a>
+                    </li>
+                    <hr>
+                    <li class="nav-item list-unstyled px-0 py-0 mb-0">
+                        <a href="/logout" class="d-flex align-items-center fs-5">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 ml-4">
+            <!-- Header -->
+            <nav class="navbar ml-2">
+                <div class="container-fluid">
+                    <div>
+                        <span>
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </span>
+                        <span class="navbar-text text-white">August 24, 2024</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="d-flex card-dark p-2 rounded align-items-center">
+                                <i class="fa-regular fa-bell navbar-icon fs-2"></i>
+                                <!-- red circle for notifications -->
+                                <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg"
+                                    style="position: relative; top: -6px; left: -7px;" class="me-0">
+                                    <circle cx="5" cy="5" r="5" fill="red" />
+                                </svg>
+                            </div>
+                            <div class="px-2">
+                                <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle">
+                            </div>
+                            <div class="flex-column">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="me-3">Restaurant Name</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <small class="text-secondary fw-bold">restaurantx@email.com</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid row">
+
+                <div class="col-sm-10 col-md-12">
+                    <h4 class="mb-4">Reports</h4>
+                    <div class="row d-flex flex-grow-1 d-md-flex d-inline d-sm-inline">
+                        <div class="col-sm-6 col-md-10">
+                            <h6>Tablets</h6>
+                        </div>
+                        <small class="col-sm-2 d-flex d-inline d-sm-inline justify-content-end pt-0 text-sm-end">
+                            <a href="javascript:void(0)" class="link-fade-white">
+                                See in detail
+                                <span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </a>
+                        </small>
+                    </div>
+
+                    <!-- Tablet Cards -->
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="card mb-4">
+                                <div class="p-3 d-flex justify-content-between">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i
+                                                class="fa-solid fa-tablet-screen-button p-1 simple-icon-rounded card-dark"></i>
+                                        </div>
+                                        <div class="col">
+                                            Tablet 01
+                                        </div>
+                                    </div>
+                                    <sup class="pt-1 mt-1 text-fade-white">Today</sup>
+                                </div>
+                                <div class="px-2">
+                                    <small class="text-left text-fade-white">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>Usage</span>
+                                    </small>
+                                    <p>
+                                        00h:00m:00s
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Orders</sup>
+                                            <p>24</p>
+                                        </div>
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Revenue</sup>
+                                            <p>R$ 2,400</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card mb-4">
+                                <div class="p-3 d-flex justify-content-between">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i
+                                                class="fa-solid fa-tablet-screen-button p-1 simple-icon-rounded card-dark"></i>
+                                        </div>
+                                        <div class="col">
+                                            Tablet 01
+                                        </div>
+                                    </div>
+                                    <sup class="pt-1 mt-1 text-fade-white">Today</sup>
+                                </div>
+                                <div class="px-2">
+                                    <small class="text-left text-fade-white">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>Usage</span>
+                                    </small>
+                                    <p>
+                                        00h:00m:00s
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Orders</sup>
+                                            <p>24</p>
+                                        </div>
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Revenue</sup>
+                                            <p>R$ 2,400</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-4">
+                                <div class="p-3 d-flex justify-content-between">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i
+                                                class="fa-solid fa-tablet-screen-button p-1 simple-icon-rounded card-dark"></i>
+                                        </div>
+                                        <div class="col">
+                                            Tablet 01
+                                        </div>
+                                    </div>
+                                    <sup class="pt-1 mt-1 text-fade-white">Today</sup>
+                                </div>
+                                <div class="px-2">
+                                    <small class="text-left text-fade-white">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>Usage</span>
+                                    </small>
+                                    <p>
+                                        00h:00m:00s
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Orders</sup>
+                                            <p>24</p>
+                                        </div>
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Revenue</sup>
+                                            <p>R$ 2,400</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-4">
+                                <div class="p-3 d-flex justify-content-between">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i
+                                                class="fa-solid fa-tablet-screen-button p-1 simple-icon-rounded card-dark"></i>
+                                        </div>
+                                        <div class="col">
+                                            Tablet 01
+                                        </div>
+                                    </div>
+                                    <sup class="pt-1 mt-1 text-fade-white">Today</sup>
+                                </div>
+                                <div class="px-2">
+                                    <small class="text-left text-fade-white">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>Usage</span>
+                                    </small>
+                                    <p>
+                                        00h:00m:00s
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Orders</sup>
+                                            <p>24</p>
+                                        </div>
+                                        <div class="col">
+                                            <sup class="text-fade-white">Total Revenue</sup>
+                                            <p>R$ 2,400</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between w-100 py-2">
+                        <h6 class="h6 py-3">Order History</h6>
+                        <div class="d-flex py-2">
+                            <span class="me-2 pr-2">Sort by</span>
+                            <span>
+                                <select name="orderDateSort" id="orderDateSort"
+                                    class="form-select-sm text-light card px-1 rounded custom-border-fade">
+                                    <option value="Today" selected="">Today</option>
+                                    <option value="Yesterday">Yesterday</option>
+                                    <option value="CurrentWeek">This Week</option>
+                                    <option value="LastWeek">Last Week</option>
+                                    <option value="ThisMonth">This Month</option>
+                                    <option value="LastMonth">Last Month</option>
+                                    <option value="ThisYear">This Year</option>
+                                    <option value="LastYear">Last Year</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- ordre history accorddion -->
+                    <div class="card p-2" id="accordionPanelsStayOpenExample">
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" id="panelsStayOpen-headingOne">
+                                <div class="text-light fw-bold card-dark p-2">
+                                    <div class="row">
+                                        <div class="col-2">Order</div>
+                                        <div class="col">Order Timing</div>
+                                        <div class="col">Units</div>
+                                        <div class="col">Total Value</div>
+                                        <div class="col">Profit</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse pt-1 show"
+                                aria-labelledby="panelsStayOpen-headingOne">
+
+                                <div class="accordion-body">
+
+                                    <div class="row custom-bottom-border px-1 pb-1">
+                                        <div class="col-2">
+                                            <strong>Spaghetti</strong>
+                                        </div>
+                                        <div class="col">
+                                            7/15/2024 - 13:24:56
+                                        </div>
+                                        <div class="col">03 Units</div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  px-1 pb-1">
+                                        <div class="col-2">
+                                            <strong>Spaghetti</strong>
+                                        </div>
+                                        <div class="col">
+                                            7/15/2024 - 13:24:56
+                                        </div>
+                                        <div class="col">03 Units</div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-1 pb-1">
+                                        <div class="col-2">
+                                            <strong>Spaghetti</strong>
+                                        </div>
+                                        <div class="col">
+                                            7/15/2024 - 13:24:56
+                                        </div>
+                                        <div class="col">03 Units</div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-1 pb-1">
+                                        <div class="col-2">
+                                            <strong>Spaghetti</strong>
+                                        </div>
+                                        <div class="col">
+                                            7/15/2024 - 13:24:56
+                                        </div>
+                                        <div class="col">03 Units</div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row px-1 pb-1">
+                                        <div class="col-2">
+                                            <strong>Spaghetti</strong>
+                                        </div>
+                                        <div class="col">
+                                            7/15/2024 - 13:24:56
+                                        </div>
+                                        <div class="col">03 Units</div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button"
+                                                class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                + R$ 2,500
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="panelsStayOpen-headingTwo">
+
+                                <div class="row  px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row  px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row  px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row custom-bottom-border px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row custom-bottom-border px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row custom-bottom-border px-1 pb-1">
+                                    <div class="col-2">
+                                        <strong>Spaghetti</strong>
+                                    </div>
+                                    <div class="col">
+                                        7/15/2024 - 13:24:56
+                                    </div>
+                                    <div class="col">03 Units</div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                            + R$ 2,500
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <hr>
+                                    <a href="#" class="pl-2 text-decoration-none link-fade-white">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span>view all</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="accordion-header" id="panelsStayOpen-headingTwo">
+                            <div class="pl-2">
+                                <a href="#" class="link-fade-white pl-3" data-bs-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                    aria-controls="panelsStayOpen-collapseTwo">
+                                    see more
+                                    <i class="fa-solid fa-arrow-down"></i>
+                                </a>
+                            </div>
+                        </small>
+                    </div>
+
+                    <!-- Revenue Section -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-between w-100 py-2">
+                                <h6 class="h6 py-3">Revenue</h6>
+                                <div class="d-flex py-2">
+                                    <span class="me-2 pr-2">Sort by</span>
+                                    <span>
+                                        <select name="revenueDateSort" id="revenueDateSort"
+                                            class="form-select-sm text-light card px-1 rounded custom-border-fade">
+                                            <option value="Today" selected="">Today</option>
+                                            <option value="Yesterday">Yesterday</option>
+                                            <option value="CurrentWeek">This Week</option>
+                                            <option value="LastWeek">Last Week</option>
+                                            <option value="ThisMonth">This Month</option>
+                                            <option value="LastMonth">Last Month</option>
+                                            <option value="ThisYear">This Year</option>
+                                            <option value="LastYear">Last Year</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card p-2" id="accordionPanelsStayOpenExample">
+
+                                <div class="accordion-item">
+                                    <div class="accordion-header" id="panelsStayOpen-headingOne">
+                                        <div class="text-light fw-bold card-dark p-2">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <i class="fa-solid fa-tablet-screen-button"></i>
+                                                    <span>Tablet</span>
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fa-solid fa-users"></i>
+                                                    <span>Total Customers</span>
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                                                    <span>Invoicing</span>
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fa-solid fa-dollar-sign px-1 icon-rounded"></i>
+                                                    <span>Profit</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse pt-1 show"
+                                        aria-labelledby="panelsStayOpen-headingOne">
+
+                                        <div class="accordion-body">
+
+                                            <div class="row custom-bottom-border px-1 pb-1">
+                                                <div class="col-2">
+                                                    <strong>Tablet 01</strong>
+                                                </div>
+                                                <div class="col px-4">
+                                                    12
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row  px-1 pb-1">
+                                                <div class="col-2">
+                                                    <strong>Tablet 03</strong>
+                                                </div>
+                                                <div class="col px-4">
+                                                    34
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-1 pb-1">
+                                                <div class="col-2">
+                                                    <strong>Tablet 04</strong>
+                                                </div>
+                                                <div class="col px-4">
+                                                    55
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-1 pb-1">
+                                                <div class="col-2">
+                                                    <strong>Tablet 07</strong>
+                                                </div>
+                                                <div class="col px-4">
+                                                    47
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row px-1 pb-1">
+                                                <div class="col-2">
+                                                    <strong>Tablet 11</strong>
+                                                </div>
+                                                <div class="col px-4">
+                                                    29
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 2,500
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-light fw-bold card-dark p-2">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    Today's Total
+                                                </div>
+                                                <div class="col">
+                                                    128
+                                                    <sup class="text-fade-white">Customers</sup>
+                                                </div>
+                                                <div class="col text-start">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-purple-fade fw-bold text-purple">
+                                                        + R$ 125,000
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button"
+                                                        class="btn btn-sm bg-radioactive-fade text-radioactive">
+                                                        + R$ 125,000
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-8">
+                            <div class="row">
+                                <div class="container mt-4">
+                                    <h6>General Statistics</h6>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <div class="stat card p-2 mt-2">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i class="fa-solid fa-phone-volume p-2 icon-rounded"></i>
+                                        </div>
+                                        <div class="col ms-2">
+                                            <h6>Waiter Calls</h6>
+                                            <div class="value">24</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stat card p-2 mt-2">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i class="fa-solid fa-star p-2 icon-rounded"></i>
+                                        </div>
+                                        <div class="col ms-2">
+                                            <h6>Average Rating</h6>
+                                            <div class="value">12</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stat card p-2 mt-2">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i class="fa-solid fa-user-group p-2 icon-rounded"></i>
+                                        </div>
+                                        <div class="col ms-2">
+                                            <h6>Table Turnover Amount</h6>
+                                            <div class="value">12</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stat card p-2 mt-2">
+                                    <div class="row">
+                                        <div class="col-1 me-2">
+                                            <i class="fa-regular fa-clock p-2 icon-rounded"></i>
+                                        </div>
+                                        <div class="col ms-2">
+                                            <h6>Average Table Timing</h6>
+                                            <div class="value">2.21 hrs</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+
+</body>
+
+</html

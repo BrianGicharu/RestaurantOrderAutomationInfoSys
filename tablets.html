@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablets</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #061322;
+            color: white;
+        }
+
+        .card-dark {
+            background-color: #061322;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background-color: #111827;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            padding-right: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            text-align: left;
+        }
+
+        .sidebar li.active {
+            background-color: #FF3E49;
+            border-radius: 10px;
+        }
+
+        .sidebar li:hover {
+            background-color: #ff3e486e;
+            font-size: large;
+            border-radius: 10px;
+        }
+
+        .main-content {
+            margin-left: 180px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #111827;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.075);
+        }
+
+        .card-bg {
+            background-color: #111827;
+        }
+
+        .card-header {
+            background-color: transparent;
+        }
+
+        .navbar {
+            background-color: #111827;
+        }
+
+        .chart-container {
+            height: 450px;
+        }
+
+        @media (max-width: 575.98px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .chart-container {
+                height: 600px;
+            }
+        }
+
+        .text-radioactive {
+            color: chartreuse;
+        }
+
+        .bg-fade-radioactive {
+            background-color: rgba(128, 255, 0, 0.100);
+        }
+
+        .bg-fade-radioactive:hover {
+            font-weight: bolder;
+            background-color: rgba(128, 255, 0, 0.250);
+        }
+
+
+        .custom-border-fade {
+            border: 1px solid rgba(255, 255, 255, 0.163);
+        }
+
+        .bg-card {
+            background-color: #061322;
+        }
+
+        .fade-red {
+            background-color: rgba(255, 0, 0, 0.245);
+        }
+
+        .btn-custom {
+            background-color: #FF3B43;
+            border: none;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #FF7078;
+        }
+
+        .text-smaller {
+            font-size: x-small;
+        }
+
+        .text-small {
+            font-size: small;
+        }
+
+        .text-smallest {
+            font-size: xx-small;
+        }
+
+        .custom-rounded {
+            border-radius: 25px;
+        }
+
+        table,
+        tr {
+            border: 1px solid rgba(255, 255, 255, 0.218);
+        }
+
+        .custom-border-white {
+            border: 1px solid rgba(255, 255, 255, 0.218);
+        }
+
+
+        tbody>tr:hover {
+            color: rgba(128, 255, 0, 0.476) !important;
+            background-color: rgba(255, 255, 255, 0.141);
+        }
+
+        .btn-purple-fade {
+            background-color: rgba(128, 10, 128, 0.25);
+        }
+
+        .btn-purple-fade:hover {
+            background-color: rgba(128, 10, 128, 0.5);
+        }
+
+        .text-purple {
+            color: rgb(212, 21, 220);
+        }
+
+        .custom-danger-btn {
+            background-color: rgba(255, 0, 0, 0.125);
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2c2c2c;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #555 #2c2c2c;
+        }
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        .pagination a:hover {
+            background-color: #4B5563;
+        }
+        .top-right-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: wheat;
+            border-radius: 7px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid d-flex">
+        <!-- Sidebar -->
+        <div class="d-flex">
+            <nav class="sidebar d-flex flex-column position-fixed prl-7">
+
+                <div class="d-flex container-fluid px-3 mb-4 justify-content-center">
+                    <h2 class="text-danger">ABRAHAO</h2>
+                </div>
+
+                <ul>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/analytics.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-chart-line me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/reports.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-file-alt me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/menu.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-utensils me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Menu</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/orders.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-concierge-bell me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Orders</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active list-unstyled px-0 py-1 mb-1">
+                        <a href="/tablets.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-tablet-alt me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Tablets</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/feedback.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-comment-dots me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Feedback</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/settings.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-cog me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item list-unstyled px-0 py-1 mb-1">
+                        <a href="/support.html" class="d-flex align-items-center fs-5">
+                            <i class="fas fa-headset me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Support</span>
+                        </a>
+                    </li>
+                    <hr>
+                    <li class="nav-item list-unstyled px-0 py-0 mb-0">
+                        <a href="/support.html" class="d-flex align-items-center fs-5">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i>
+                            <span class="d-none d-sm-none d-md-block">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 ml-4">
+            <!-- Header -->
+            <nav class="navbar ml-2">
+                <div class="container-fluid">
+                    <div>
+                        <span>
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </span>
+                        <span class="navbar-text text-white">August 24, 2024</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="d-flex card-dark p-2 rounded align-items-center">
+                                <i class="fa-solid fa-bell navbar-icon fs-2"></i>
+                            </div>
+                            <div class="px-2">
+                                <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle">
+                            </div>
+                            <div class="flex-column">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="me-3">Restaurant Name</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <small class="text-secondary fw-bold">restaurantx@email.com</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- main content -->
+            <main>
+                <div class="header mt-2">
+
+                    <!-- tablet table start -->
+                    <div class="container-fluid">
+                        <!-- Date and Header -->
+                        <div class="row my-3">
+                            <div class="col-md-6">
+                                <h4>
+                                    Tablets
+                                    <span class="badge badge-danger">
+                                        <span class="custom-rounded_ border-danger fade-red">
+                                            <p class="text-danger">04</p>
+                                        </span>
+                                    </span>
+                                </h4>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-danger">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Add Tablet</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tablets Table -->
+                        <div class="container-responsive custom-border-white rounded">
+                            <div class="table-responsive rounded p-2">
+                                <table class="table text-white rounded table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-tablet-screen-button"></i>
+                                                <span>Tablets</span>
+                                            </th>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-tower-broadcast"></i>
+                                                <span>Availability</span>
+                                            </th>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>Usage (hh/mm/ss)</span>
+                                            </th>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-bell-concierge"></i>
+                                                <span>Orders</span>
+                                            </th>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                                                <span>Invoicing</span>
+                                            </th>
+                                            <th scope="col">
+                                                <i class="fa-solid fa-battery-full"></i>
+                                                <span>Battery</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="card-bg text-white">
+                                        <tr>
+                                            <td class="text-light">Tablet 01</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn bg-fade-radioactive text-radioactive">
+                                                    <small>Available</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">00:00:00</td>
+                                            <td class="text-light">06</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn btn-purple-fade text-purple w-50">
+                                                    <small>R$ 2,500</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">80 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-light">Tablet 04</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn bg-fade-radioactive text-radioactive">
+                                                    <small>Available</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">02:14:49</td>
+                                            <td class="text-light">04</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn btn-purple-fade text-purple w-50">
+                                                    <small>R$ 500</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">60 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-light">Tablet 03</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn custom-danger-btn text-danger">
+                                                    <small>Available</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">04:14:49</td>
+                                            <td class="text-light">06</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn btn-purple-fade text-purple w-50">
+                                                    <small>R$ 4,000</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">50 %</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-light">Tablet 07</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn bg-fade-radioactive text-radioactive">
+                                                    <small>Available</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">02:14:49</td>
+                                            <td class="text-light">08</td>
+                                            <td class="text-light">
+                                                <button type="button" class="btn btn-purple-fade text-purple w-50">
+                                                    <small>R$ 5,500</small>
+                                                </button>
+                                            </td>
+                                            <td class="text-light">70 %</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+            <div class="footer mt-4 text-center">
+                <div class="pagination">
+                    <a href="#">‹ Previous</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#" class="d-none d-md-inline d-sm-none">…</a>
+                    <a href="#" class="d-none d-md-inline d-sm-none">67</a>
+                    <a href="#" class="d-none d-md-inline d-sm-none">68</a>
+                    <a href="#">Next ›</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js (For Graphs) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</body>
+
+</html
